@@ -27,7 +27,6 @@ class NOTEBOOK(ttk.Notebook):
         self.first_tab = Frame(self)
         self.second_tab = Frame(self)
         self.therth_tab = Frame(self)
-        master.bind('<Configure>', self.getSize)
 
         # ********* first tab frame content ****************
         self.frameContent_tab_1 = LabelFrame(self.first_tab, labelanchor='n', text='Frame 1', relief='raised')
@@ -44,24 +43,16 @@ class NOTEBOOK(ttk.Notebook):
         # ******** first tab text box ************
         self.textbox = Label(self.frameContent_tab_1)
         self.textbox.config(borderwidth=0, fg='black', bg='white', relief='flat', justify='left', text=self.__doc__)
-        # print(self.textbox.keys())
 
         self.add(child=self.first_tab, text='ficha uno')
         self.add(child=self.second_tab, text='ficha dos')
         self.add(child=self.therth_tab, text='ficha tres')
 
-        self.pack(expand=True, fill='both', side='right')
         self.frameContent_tab_1.pack(expand=True, fill='both')
         self.frameContent_tab_2.pack(expand=True, fill='both')
         self.frameContent_tab_3.pack(expand=True, fill='both')
 
         self.textbox.pack(expand=True, fill='both', side='top')
-
-    def getSize(self, e):
-        if e.x != 0 or e.y != 0 :
-            pass
-        else:
-            self.config(width=int(e.width * 0.95))
 
     def setContentTitle(self, widget, title):
         self.widget = widget
@@ -79,6 +70,7 @@ class NOTEBOOK(ttk.Notebook):
 def lounchApp():
     app = Tk()
     notebook = NOTEBOOK(app)
+    notebook.pack(fill='both', expand='true')
     app.mainloop()
 
 if __name__ == '__main__':
