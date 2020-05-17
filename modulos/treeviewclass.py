@@ -24,7 +24,7 @@ class TREEViEW(ttk.Treeview):
 
         # Eventos por tags
         self.tag_bind(tagname='parent_Item', sequence='<<TreeviewSelect>>', callback=self.selectedItemID)
-        self.tag_bind(tagname='sub_Item', sequence='<<TreeviewSelect>>', callback=self.selectedItemID)
+        # self.tag_bind(tagname='sub_Item', sequence='<<TreeviewSelect>>', callback=self.selectedItemID)
 
         # Configuración por tags
         self.tag_configure(tagname='parent_Item', foreground='red')
