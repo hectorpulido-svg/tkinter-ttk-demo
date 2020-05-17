@@ -16,7 +16,7 @@ class TREEViEW(ttk.Treeview):
         # primer elemento con dos sub elementos
         self.insert(parent='', index=0, text='Item_1', iid='id_parent_Item_1', tags='parent_Item')
         self.insert(parent='id_parent_Item_1', index=0, text='SubItem_1.1', iid='id_SubItem_1.1', tags='sub_Item')
-        self.insert(parent='id_parent_Item_1', index=1, text='SubItem_2.1', iid='id_SubItem_2.1', tags='sub_Item')
+        self.insert(parent='id_parent_Item_1', index=1, text='Button widget', iid='tkinter.Button', tags='sub_Item')
 
         # segundo elemento con un sub elemento
         self.insert(parent='', index=1, text='Item_2', iid='id_parent_Item_2', tags='parent_Item')
