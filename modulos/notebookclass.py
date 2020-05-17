@@ -41,9 +41,9 @@ class NOTEBOOK(ttk.Notebook):
         self.frameContent_tab_3.config(borderwidth=1, fg='black', bg='lightgrey')
 
         # ******** first tab text box ************
-        self.textbox = Text(self.frameContent_tab_1)
-        self.textbox.config(borderwidth=1, fg='black', bg='lightgrey', relief='flat', wrap='word', padx=10, pady=10)
-        # self.textbox.insert('1.0', self.__doc__)
+        self.overview_textbox = Text(self.frameContent_tab_1)
+        self.overview_textbox.config(borderwidth=1, fg='black', bg='lightgrey', relief='flat', wrap='word', padx=10, pady=10)
+        # self.overview_textbox.insert('1.0', self.__doc__)
 
         self.add(child=self.first_tab, text='ficha uno')
         self.add(child=self.second_tab, text='ficha dos')
@@ -53,7 +53,7 @@ class NOTEBOOK(ttk.Notebook):
         self.frameContent_tab_2.pack(expand=True, fill='both')
         self.frameContent_tab_3.pack(expand=True, fill='both')
 
-        self.textbox.pack(expand=True, fill='both', side='top')
+        self.overview_textbox.pack(expand=True, fill='both', side='top')
 
     def setContentTitle(self, widget, title):
         self.widget = widget
