@@ -4,18 +4,18 @@ from tkinter import ttk
 
 class NOTEBOOK(ttk.Notebook):
     '''
-        En este demo utilizo el widget Notebook el cual se encuentra en la librería tkinter.ttk
-        construido con tres pestañas que contienen un frame cada una el cual puede llevar un titulo.
-        Para presentar los modulos que hacen el demo de los widgets, tanto de la librería tkinter
-        como de la librería tkinter.ttk, utilizo el widget Treevew que se encuentra en la misma librería
+    En este demo utilizo el widget Notebook el cual se encuentra en la librería tkinter.ttk
+    construido con tres pestañas que contienen un frame cada una el cual puede llevar un titulo.
+    Para presentar los modulos que hacen el demo de los widgets, tanto de la librería tkinter
+    como de la librería tkinter.ttk, utilizo el widget Treevew que se encuentra en la misma librería
 
-        El módulo tkinter.ttk proporciona acceso al conjunto de widgets temáticos Tk, introducido en Tk 8.5.
-        Si Python no se ha compilado contra Tk 8.5, aún se puede acceder a este módulo si se ha instalado Tile.
-        El primer método que usa Tk 8.5 proporciona beneficios adicionales, incluida la representación de fuentes suavizadas en X11
-        y la transparencia de la ventana (que requiere un administrador de ventanas de composición en X11).
+    El módulo tkinter.ttk proporciona acceso al conjunto de widgets temáticos Tk, introducido en Tk 8.5.
+    Si Python no se ha compilado contra Tk 8.5, aún se puede acceder a este módulo si se ha instalado Tile.
+    El primer método que usa Tk 8.5 proporciona beneficios adicionales, incluida la representación de fuentes suavizadas en X11
+    y la transparencia de la ventana (que requiere un administrador de ventanas de composición en X11).
 
-        La idea básica para tkinter.ttk es separar, en la medida de lo posible,
-        el código que implementa el comportamiento de un widget del código que implementa su apariencia.
+    La idea básica para tkinter.ttk es separar, en la medida de lo posible,
+    el código que implementa el comportamiento de un widget del código que implementa su apariencia.
 
     '''
     def __init__(self, master):
@@ -41,8 +41,9 @@ class NOTEBOOK(ttk.Notebook):
         self.frameContent_tab_3.config(borderwidth=1, fg='black', bg='lightgrey')
 
         # ******** first tab text box ************
-        self.textbox = Label(self.frameContent_tab_1)
-        self.textbox.config(borderwidth=0, fg='black', bg='white', relief='flat', justify='left', text=self.__doc__)
+        self.textbox = Text(self.frameContent_tab_1)
+        self.textbox.config(borderwidth=1, fg='black', bg='lightgrey', relief='flat', wrap='word', padx=10, pady=10)
+        # self.textbox.insert('1.0', self.__doc__)
 
         self.add(child=self.first_tab, text='ficha uno')
         self.add(child=self.second_tab, text='ficha dos')
