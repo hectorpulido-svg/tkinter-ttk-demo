@@ -1,5 +1,6 @@
 import tkinter
 from tkinter import *
+# from tkinter import ttk
 from modulos.treeviewclass import TREEViEW
 from modulos.notebookclass import NOTEBOOK
 from modulos.infoboxclass import INFOBOX
@@ -54,23 +55,26 @@ class DEMO(Frame):
         self.extrainfo_textbox.insert('1.0',  self.treeview.selection()[0])
         try:
             import importlib
-            __list =[
-                'tkinter.Button',
-                'tkinter.Label'
-            ]
             global cl, component
             module = self.treeview.selection()[0].split('.')[0]
+
+            if module == 'ttk':
+                module = 'tkinter.ttk'
+
             component = self.treeview.selection()[0].split('.')[1:]
-            mod = importlib.import_module(name=module, package='tkinter')
+
+            mod = importlib.import_module(name=module, package=module)
             for comp in component:
                 cl = getattr(mod, comp)
                 obj = {comp: cl}
                 print(module)
                 self.extrainfo_textbox.delete('1.0', END)
                 self.extrainfo_textbox.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s'  % (str(mod), str(obj), cl, str(comp) ))
+                self.notebook.overview_textbox.delete(END)
                 self.notebook.overview_textbox.insert(END, 'clase : ' + comp + '  ' + 'keys' + '\n\n' + str(cl().keys()))
-        except:
-            pass
+        except (RuntimeError, TypeError, NameError):
+            print(RuntimeError, TypeError, NameError)
+
 
     def overView(self, txt):
         self.notebook.overview_textbox.insert('1.0', txt)
