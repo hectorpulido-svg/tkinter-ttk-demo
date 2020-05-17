@@ -32,7 +32,7 @@ class DEMO(Frame):
 
         # coloca el notebook
         self.notebook = NOTEBOOK(self.notebook_panel)
-        self.notebook_panel.add(self.notebook)
+        self.notebook_panel.add(self.notebook, height=500)
 
         # panel de informacion
         self.text_panel = PanedWindow(self.master, orient='vertical')
@@ -52,7 +52,9 @@ class DEMO(Frame):
 def lounchApp():
     app = Tk()
     app.title('TKINTER & TTK DEMO')
-    app.geometry('800x600')
+    width = '1000'
+    height = '600'
+    app.geometry(width + 'x' + height)
     demo = DEMO(app)
     app.mainloop()
 
