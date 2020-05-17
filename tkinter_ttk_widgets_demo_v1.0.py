@@ -46,7 +46,12 @@ class DEMO(Frame):
         # coloca el textbox
         self.text = INFOBOX(self.text_panel)
         self.text_panel.add(self.text)
-        # print(self.text_panel.keys())
+        self.currentItem = self.treeview.tag_bind(tagname='sub_Item', sequence='<<TreeviewSelect>>', callback=self.response)
+
+    def response(self, e):
+        s = (lambda x: ('Elemento padre : ' + x) if 'paren' in x else ('Elemento hijo : ' + x))
+        self.text.delete('1.0', END)
+        self.text.insert('1.0',  self.treeview.selection()[0])
 
 
 def lounchApp():
