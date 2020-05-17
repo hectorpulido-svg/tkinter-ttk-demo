@@ -32,26 +32,26 @@ class DEMO(Frame):
 
         # coloca el notebook
         self.notebook = NOTEBOOK(self.notebook_panel)
-        self.notebook_panel.add(self.notebook, height=500)
+        self.notebook_panel.add(self.notebook, height=450)
 
         # panel de informacion
-        self.text_panel = PanedWindow(self.master, orient='vertical')
-        self.text_panel.config(sashrelief='raised')
-        self.text_panel.pack(fill='both', expand='true', side='bottom')
+        self.extrainfo_textbox_panel = PanedWindow(self.master, orient='vertical')
+        self.extrainfo_textbox_panel.config(sashrelief='raised')
+        self.extrainfo_textbox_panel.pack(fill='both', expand='true', side='bottom')
 
         # el panel del info pertenece al panel del treeview
         # esta linea va antes de colocar el notebook en su panel
-        self.notebook_panel.add(self.text_panel)
+        self.notebook_panel.add(self.extrainfo_textbox_panel)
 
-        # coloca el textbox
-        self.textinfo = INFOBOX(self.text_panel)
-        self.text_panel.add(self.textinfo)
+        # coloca el overview_textbox
+        self.extrainfo_textbox = INFOBOX(self.extrainfo_textbox_panel)
+        self.extrainfo_textbox_panel.add(self.extrainfo_textbox)
         self.currentItem = self.treeview.tag_bind(tagname='sub_Item', sequence='<<TreeviewSelect>>', callback=self.response)
 
     def response(self, e):
         s = (lambda x: ('Elemento padre : ' + x) if 'paren' in x else ('Elemento hijo : ' + x))
-        self.textinfo.delete('1.0', END)
-        self.textinfo.insert('1.0',  self.treeview.selection()[0])
+        self.extrainfo_textbox.delete('1.0', END)
+        self.extrainfo_textbox.insert('1.0',  self.treeview.selection()[0])
         try:
             import importlib
             __list =[
@@ -66,14 +66,14 @@ class DEMO(Frame):
                 cl = getattr(mod, comp)
                 obj = {comp: cl}
                 print(module)
-                self.textinfo.delete('1.0', END)
-                self.textinfo.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s'  % (str(mod), str(obj), cl, str(comp) ))
-                self.notebook.textbox.insert(END, 'clase : ' + comp + '  ' + 'keys' + '\n\n' + str(cl().keys()))
+                self.extrainfo_textbox.delete('1.0', END)
+                self.extrainfo_textbox.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s'  % (str(mod), str(obj), cl, str(comp) ))
+                self.notebook.overview_textbox.insert(END, 'clase : ' + comp + '  ' + 'keys' + '\n\n' + str(cl().keys()))
         except:
             pass
 
     def overView(self, txt):
-        self.notebook.textbox.insert('1.0', txt)
+        self.notebook.overview_textbox.insert('1.0', txt)
 
 
 
@@ -92,7 +92,7 @@ __overView = "En este demo utilizo el widget Notebook el cual se encuentra en la
 def lounchApp():
     app = Tk()
     app.title('TKINTER & TTK DEMO')
-    width = '1000'
+    width = '1100'
     height = '600'
     app.geometry(width + 'x' + height)
     demo = DEMO(app)
