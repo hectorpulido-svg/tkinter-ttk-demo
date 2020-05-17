@@ -62,7 +62,7 @@ class DEMO(Frame):
                 module = 'tkinter.ttk'
 
             component = self.treeview.selection()[0].split('.')[1:]
-            
+
             mod = importlib.import_module(name=module, package=module)
             for comp in component:
                 cl = getattr(mod, comp)
