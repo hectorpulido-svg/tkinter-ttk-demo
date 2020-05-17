@@ -1,6 +1,7 @@
 from tkinter import *
 from modulos.treeviewclass import TREEViEW
 from modulos.notebookclass import NOTEBOOK
+from modulos.infoboxclass import INFOBOX
 
 
 class DEMO(Frame):
@@ -11,29 +12,41 @@ class DEMO(Frame):
 
         super().__init__(master)
 
-        # panel horizontal
-        self.treeview_panedwindow = PanedWindow(self.master, orient='horizontal')
-        self.treeview_panedwindow.config(sashrelief='raised')
-        self.treeview_panedwindow.pack(fill='both', expand='true', side='left')
+        # panel del treeview
+        self.treeview_panel = PanedWindow(self.master, orient='horizontal')
+        self.treeview_panel.config(sashrelief='raised')
+        self.treeview_panel.pack(fill='both', expand='true', side='left')
 
-        # contenido del panel horizontal
-        self.treeview = TREEViEW(self.treeview_panedwindow)
-        self.treeview_panedwindow.add(self.treeview)
+        # coloca treeview
+        self.treeview = TREEViEW(self.treeview_panel)
+        self.treeview_panel.add(self.treeview)
 
-        # panel vertical
-        self.notebook_panedwindow = PanedWindow(self.master, orient='vertical')
-        self.notebook_panedwindow.config(sashrelief='raised')
-        self.notebook_panedwindow.pack(fill='both', expand='true', side='right')
+        # panel del notebook
+        self.notebook_panel = PanedWindow(self.master, orient='vertical')
+        self.notebook_panel.config(sashrelief='raised')
+        self.notebook_panel.pack(fill='both', expand='true', side='top')
 
-        # el panel vertical pertenece al panel horizontal
-        # esta linea va antes de el contenido del seguno panel
-        self.treeview_panedwindow.add(self.notebook_panedwindow)
+        # el panel del notebook pertenece al panel del treeview
+        # esta linea va antes de colocar el notebook en su panel
+        self.treeview_panel.add(self.notebook_panel)
 
-        # contenido del panel vertical
-        self.notebook = NOTEBOOK(self.notebook_panedwindow)
-        self.notebook_panedwindow.add(self.notebook)
+        # coloca el notebook
+        self.notebook = NOTEBOOK(self.notebook_panel)
+        self.notebook_panel.add(self.notebook)
 
-        # print(self.treeview.keys())
+        # panel de informacion
+        self.text_panel = PanedWindow(self.master, orient='vertical')
+        self.text_panel.config(sashrelief='raised')
+        self.text_panel.pack(fill='both', expand='true', side='bottom')
+
+        # el panel del info pertenece al panel del treeview
+        # esta linea va antes de colocar el notebook en su panel
+        self.notebook_panel.add(self.text_panel)
+
+        # coloca el textbox
+        self.text = INFOBOX(self.text_panel)
+        self.text_panel.add(self.text)
+        # print(self.text_panel.keys())
 
 
 def lounchApp():
