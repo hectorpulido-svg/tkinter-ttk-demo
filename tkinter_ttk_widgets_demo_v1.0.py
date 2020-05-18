@@ -128,9 +128,6 @@ class DEMO(Frame):
         maped_list = list((map((lambda x: x.center(min_lenght, ' ')), obj().keys())))
         self.getkey(maped_list)
 
-        print(largest_element +'\n')
-        print(maped_list)
-
     def overView(self, txt):
         self.notebook.overview_textbox.insert('1.0', txt)
 
