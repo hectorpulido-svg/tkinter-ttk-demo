@@ -22,10 +22,6 @@ class TREEViEW(ttk.Treeview):
         self.insert(parent='', index=1, text='tkinter ttk lib', iid='id_parent_tkinter_ttk', tags='parent_Item')
         self.insert(parent='id_parent_tkinter_ttk', index=0, text='Button widget', iid='ttk.Button', tags='sub_Item')
 
-        # tercer elemento con un sub elemento
-        self.insert(parent='', index=2, text='wxPython lib', iid='id_parent_wxpython', tags='parent_Item')
-        self.insert(parent='id_parent_wxpython', index=0, text='Button widget', iid='wx.Button', tags='sub_Item')
-
         # Configuración por tags
         self.tag_configure(tagname='parent_Item', foreground='red')
 

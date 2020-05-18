@@ -57,32 +57,29 @@ class DEMO(Frame):
             tagname='parent_Item', sequence='<<TreeviewSelect>>', callback=self.responseParItem)
 
     def responseSubItem(self, e):
-        try:
-            import importlib
-            global cl, component
-            module = self.treeview.selection()[0].split('.')[0]
+        import importlib
+        global cls2Binstace, component
+        module = self.treeview.selection()[0].split('.')[0]
 
-            if module == 'ttk':
-                module = 'tkinter.ttk'
+        if module == 'ttk':
+            module = 'tkinter.ttk'
 
-            component = self.treeview.selection()[0].split('.')[1:]
+        component = self.treeview.selection()[0].split('.')[1:]
 
-            mod = importlib.import_module(name=module, package=module)
-            for cls2Binstance in component:
-                cl = getattr(mod, cls2Binstance)
-                obj = {cls2Binstance: cl}
-                self.extrainfo_textbox.delete('1.0', END)
-                self.extrainfo_textbox.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s' % (
-                    str(mod), str(obj), cl, str(cls2Binstance)))
-                try:
-                    self.notebook.overview_textbox.delete('1.0', END)
-                    self.notebook.overview_textbox.insert(
-                        END, 'clase : ' + cls2Binstance + '  ' + 'keys' + '\n\n' + str(cl().keys()))
-                except:
-                    pass
+        mod = importlib.import_module(name=module, package=module)
+        for cls_name in component:
+            cls2Binstace = getattr(mod, cls_name)
+            obj = {cls_name: cls2Binstace}
 
-        except(RuntimeError, TypeError, NameError):
-            print(RuntimeError, TypeError, NameError)
+            self.extrainfo_textbox.delete('1.0', END)
+            self.extrainfo_textbox.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s' % (
+                str(mod), str(obj), cls2Binstace, str(cls_name)))
+            self.notebook.overview_textbox.delete('1.0', END)
+            self.notebook.overview_textbox.insert(
+                END, 'clase : ' + cls_name + '  ' + 'keys' + '\n\n' + str(cls2Binstace().keys()))
+            self.widgetcached = cls2Binstace(self.notebook.overview_textbox, text='instancias cachada')
+            self.widgetcached.pack(side='bottom')
+
 
     def responseParItem(self, e):
         self.notebook.overview_textbox.delete('1.0', END)
