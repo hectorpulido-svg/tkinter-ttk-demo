@@ -52,9 +52,9 @@ class DEMO(Frame):
         self.extrainfo_textbox = INFOBOX(self.extrainfo_textbox_panel)
         self.extrainfo_textbox_panel.add(self.extrainfo_textbox)
         self.currentSubItem = self.treeview.tag_bind(
-            tagname='sub_Item', sequence='<<TreeviewSelect>>', callback=self.responseSubItem)
+            tagname='sub_Info_Item', sequence='<<TreeviewSelect>>', callback=self.responseSubItem)
         self.currentParItem = self.treeview.tag_bind(
-            tagname='parent_Item', sequence='<<TreeviewSelect>>', callback=self.responseParItem)
+            tagname='parent_Info_Item', sequence='<<TreeviewSelect>>', callback=self.responseParItem)
 
     def responseSubItem(self, e):
         import importlib
@@ -77,8 +77,15 @@ class DEMO(Frame):
             self.notebook.overview_textbox.delete('1.0', END)
             self.notebook.overview_textbox.insert(
                 END, 'clase : ' + cls_name + '  ' + 'keys' + '\n\n' + str(cls2Binstace().keys()))
-            self.widgetcached = cls2Binstace(self.notebook.overview_textbox, text='instancias cachada')
-            self.widgetcached.pack(side='bottom')
+
+            # self.notebook.setTabTitle(self.notebook.first_tab, 'información relativa al widget %s ' % (cls_name) )
+            self.notebook.setContentTitle(self.notebook.frameContent_tab_1, 'información relativa al widget  %s' % (cls2Binstace) )
+
+            # TODO
+
+            # self.widgetdemo = Frame(self.notebook.frameContent_tab_2)
+            # self.widgetcached = cls2Binstace(self.widgetdemo, text='instancias cachada')
+            # self.widgetcached.pack(side='bottom')
 
 
     def responseParItem(self, e):
@@ -86,6 +93,7 @@ class DEMO(Frame):
         self.overView(_overView)
         self.extrainfo_textbox.delete('1.0', END)
         self.extrainfo_textbox.insert('1.0',  self.treeview.selection()[0])
+        self.notebook.setContentTitle(self.notebook.frameContent_tab_1, 'ventana de bienvenida')
 
     def overView(self, txt):
         self.notebook.overview_textbox.insert('1.0', txt)

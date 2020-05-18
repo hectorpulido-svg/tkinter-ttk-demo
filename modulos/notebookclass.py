@@ -27,22 +27,42 @@ class NOTEBOOK(ttk.Notebook):
         self.first_tab = Frame(self)
         self.second_tab = Frame(self)
         self.therth_tab = Frame(self)
-
+        self.font = {'font': 'Arial', 'size': 16, 'type': 'bold'}
+        self.font_overview = {'font': 'Arial', 'size': 12, 'type': 'bold'}
         # ********* first tab frame content ****************
-        self.frameContent_tab_1 = LabelFrame(self.first_tab, labelanchor='n', text='Frame 1', relief='raised')
-        self.frameContent_tab_1.config(borderwidth=1, fg='black', bg='lightgrey')
+        self.frameContent_tab_1 = LabelFrame(self.first_tab, labelanchor='n', text='ventana de bienvenida', relief='raised')
+        self.frameContent_tab_1.config(
+            borderwidth=1,
+            fg='black',
+            bg='lightgrey',
+            font=(self.font['font'], self.font['size'], self.font['type']))
 
         # ********* second tab frame content ****************
         self.frameContent_tab_2 = LabelFrame(self.second_tab, labelanchor='n', text='Frame 2', relief='raised')
-        self.frameContent_tab_2.config(borderwidth=1, fg='black', bg='lightgrey')
+        self.frameContent_tab_2.config(
+            borderwidth=1,
+            fg='black',
+            bg='lightgrey',
+            font=(self.font['font'], self.font['size'], self.font['type']))
 
         # ********* therth tab frame content ****************
         self.frameContent_tab_3 = LabelFrame(self.therth_tab, labelanchor='n', text='Frame 3', relief='raised')
-        self.frameContent_tab_3.config(borderwidth=1, fg='black', bg='lightgrey')
+        self.frameContent_tab_3.config(
+            borderwidth=1,
+            fg='black',
+            bg='lightgrey',
+            font=(self.font['font'], self.font['size'], self.font['type']))
 
         # ******** first tab text box ************
         self.overview_textbox = Text(self.frameContent_tab_1)
-        self.overview_textbox.config(borderwidth=1, fg='black', bg='lightgrey', relief='flat', wrap='word', padx=10, pady=10)
+        self.overview_textbox.config(
+            borderwidth=1, fg='black',
+            bg='lightgrey',
+            relief='flat',
+            wrap='word',
+            padx=10,
+            pady=10,
+            font=(self.font_overview['font'], self.font_overview['size'], self.font_overview['type']))
         # self.overview_textbox.insert('1.0', self.__doc__)
 
         self.add(child=self.first_tab, text='ficha uno')
@@ -72,6 +92,7 @@ def lounchApp():
     app = Tk()
     notebook = NOTEBOOK(app)
     notebook.pack(fill='both', expand='true')
+    notebook.setTabTitle(notebook.second_tab, 'cambio de texto')
     app.mainloop()
 
 if __name__ == '__main__':
