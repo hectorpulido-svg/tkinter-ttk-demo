@@ -29,6 +29,9 @@ class NOTEBOOK(ttk.Notebook):
         self.therth_tab = Frame(self)
         self.font = {'font': 'Arial', 'size': 16, 'type': 'bold'}
         self.font_overview = {'font': 'Arial', 'size': 12, 'type': 'bold'}
+        self.tab_label_1 = 'pestaña 1'
+        self.tab_label_2 = 'pestaña 2'
+        self.tab_label_3 = 'pestaña 3'
         # ********* first tab frame content ****************
         self.frameContent_tab_1 = LabelFrame(self.first_tab, labelanchor='n', text='ventana de bienvenida', relief='raised')
         self.frameContent_tab_1.config(
@@ -65,9 +68,9 @@ class NOTEBOOK(ttk.Notebook):
             font=(self.font_overview['font'], self.font_overview['size'], self.font_overview['type']))
         # self.overview_textbox.insert('1.0', self.__doc__)
 
-        self.add(child=self.first_tab, text='ficha uno')
-        self.add(child=self.second_tab, text='ficha dos')
-        self.add(child=self.therth_tab, text='ficha tres')
+        self.add(child=self.first_tab, text=self.tab_label_1)
+        self.add(child=self.second_tab, text=self.tab_label_2)
+        self.add(child=self.therth_tab, text=self.tab_label_3)
 
         self.frameContent_tab_1.pack(expand=True, fill='both')
         self.frameContent_tab_2.pack(expand=True, fill='both')

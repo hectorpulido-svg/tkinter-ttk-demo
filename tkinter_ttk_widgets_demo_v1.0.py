@@ -15,48 +15,51 @@ class DEMO(Frame):
 
         super().__init__(master)
 
-        # panel del treeview
+        # ---------------------------------------
+        #               TREEVIEW PANEL
         self.treeview_panel = PanedWindow(self.master, orient='horizontal')
-        self.treeview_panel.config(sashrelief='raised')
+        self.treeview_panel.config(sashrelief='raised', showhandle=True, opaqueresize=False)
         self.treeview_panel.pack(fill='both', expand='true', side='left')
 
-        # coloca treeview
+        # añade el treeview
         self.treeview = TREEViEW(self.treeview_panel)
         self.treeview_panel.add(self.treeview)
 
-        # panel del notebook
+        # ---------------------------------------
+        #               NOTEBOOK PANEL
         self.notebook_panel = PanedWindow(self.master, orient='vertical')
-        self.notebook_panel.config(sashrelief='raised')
+        self.notebook_panel.config(sashrelief='raised', showhandle=True, opaqueresize=False)
         self.notebook_panel.pack(fill='both', expand='true', side='top')
 
-        # el panel del notebook pertenece al panel del treeview
-        # esta linea va antes de colocar el notebook en su panel
+        # el notebook_panel pertenece al treeview_panel
+        # esta linea va antes de añadir el notebook
         self.treeview_panel.add(self.notebook_panel)
 
-        # coloca el notebook
+        # añade el notebook
         self.notebook = NOTEBOOK(self.notebook_panel)
-        self.notebook_panel.add(self.notebook, height=450)
+        self.notebook_panel.add(self.notebook)
+        # self.notebook_panel.add(self.notebook, height=550)  # no borrar
 
-        # panel de informacion
-        self.extrainfo_textbox_panel = PanedWindow(
-            self.master, orient='vertical')
-        self.extrainfo_textbox_panel.config(sashrelief='raised')
-        self.extrainfo_textbox_panel.pack(
-            fill='both', expand='true', side='bottom')
+        # ---------------------------------------
+        #           EXTRA INFO PANEL
+        self.extrainfo_panel = PanedWindow(self.master, orient='vertical')
+        self.extrainfo_panel.config(sashrelief='raised')
+        self.extrainfo_panel.pack(fill='both', expand='true', side='bottom')
 
-        # el panel del info pertenece al panel del treeview
-        # esta linea va antes de colocar el notebook en su panel
-        self.notebook_panel.add(self.extrainfo_textbox_panel)
+        # el extrainfo_panel pertenece al notebook_panel
+        self.notebook_panel.add(self.extrainfo_panel)
 
         # coloca el overview_textbox
-        self.extrainfo_textbox = INFOBOX(self.extrainfo_textbox_panel)
-        self.extrainfo_textbox_panel.add(self.extrainfo_textbox)
+        self.extrainfo = INFOBOX(self.extrainfo_panel)
+        self.extrainfo_panel.add(self.extrainfo)
         self.currentSubItem = self.treeview.tag_bind(
-            tagname='sub_Info_Item', sequence='<<TreeviewSelect>>', callback=self.responseSubItem)
+            tagname='sub_Info_Item', sequence='<<TreeviewSelect>>', callback=self.responseSub_Item)
         self.currentParItem = self.treeview.tag_bind(
-            tagname='parent_Info_Item', sequence='<<TreeviewSelect>>', callback=self.responseParItem)
+            tagname='parent_Info_Item', sequence='<<TreeviewSelect>>', callback=self.responseParent_Item)
 
-    def responseSubItem(self, e):
+        # self.master.bind('<Configure>', self.getSize) # no borrar
+
+    def responseSub_Item(self, e):
         import importlib
         global cls2Binstace, component
         module = self.treeview.selection()[0].split('.')[0]
@@ -71,32 +74,44 @@ class DEMO(Frame):
             cls2Binstace = getattr(mod, cls_name)
             obj = {cls_name: cls2Binstace}
 
-            self.extrainfo_textbox.delete('1.0', END)
-            self.extrainfo_textbox.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s' % (
+            self.extrainfo.delete('1.0', END)
+            self.extrainfo.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s' % (
                 str(mod), str(obj), cls2Binstace, str(cls_name)))
             self.notebook.overview_textbox.delete('1.0', END)
             self.notebook.overview_textbox.insert(
                 END, 'clase : ' + cls_name + '  ' + 'keys' + '\n\n' + str(cls2Binstace().keys()))
+            self.getkey_labels(cls2Binstace)
 
-            # self.notebook.setTabTitle(self.notebook.first_tab, 'información relativa al widget %s ' % (cls_name) )
-            self.notebook.setContentTitle(self.notebook.frameContent_tab_1, 'información relativa al widget  %s' % (cls2Binstace) )
-
+            object_methods = [method_name for method_name in dir(cls2Binstace)
+                  if callable(getattr(cls2Binstace, method_name))]
+            self.notebook.overview_textbox.insert(END, '\n\nmetodos de la clase\n\n' + str(object_methods))
+            self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name) )
+            self.notebook.setContentTitle(self.notebook.frameContent_tab_1, str(cls2Binstace))
+            
             # TODO
-
             # self.widgetdemo = Frame(self.notebook.frameContent_tab_2)
             # self.widgetcached = cls2Binstace(self.widgetdemo, text='instancias cachada')
             # self.widgetcached.pack(side='bottom')
 
 
-    def responseParItem(self, e):
+    def responseParent_Item(self, e):
         self.notebook.overview_textbox.delete('1.0', END)
         self.overView(_overView)
-        self.extrainfo_textbox.delete('1.0', END)
-        self.extrainfo_textbox.insert('1.0',  self.treeview.selection()[0])
+        self.extrainfo.delete('1.0', END)
+        self.extrainfo.insert('1.0',  self.treeview.selection()[0])
+        self.notebook.setTabTitle(self.notebook.first_tab, self.notebook.tab_label_1)
         self.notebook.setContentTitle(self.notebook.frameContent_tab_1, 'ventana de bienvenida')
+
+    def getkey_labels(self, obj):
+        w = master.with()
+
 
     def overView(self, txt):
         self.notebook.overview_textbox.insert('1.0', txt)
+
+    # def getSize(self, e): # no borrar
+    #     self.notebook_panel.config(height=int(float(e.height) * 0.95))
+    #     self.notebook_panel.config(width=int(float(e.width) * 0.85))
 
 
 _overView = "En este demo utilizo el widget Notebook el cual se encuentra en la librería tkinter.ttk "\
@@ -109,7 +124,6 @@ _overView = "En este demo utilizo el widget Notebook el cual se encuentra en la 
     "y la transparencia de la ventana (que requiere un administrador de ventanas de composición en X11).\n"\
     "La idea básica para tkinter.ttk es separar, en la medida de lo posible, "\
     "el código que implementa el comportamiento de un widget del código que implementa su apariencia.\n\n "\
-
 
 
 def lounchApp():
