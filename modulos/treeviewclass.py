@@ -4,17 +4,15 @@ from tkinter import ttk
 class TREEViEW(ttk.Treeview):
 
     def __init__(self, master):
-
+        self.bodystyle = ttk.Style()
+        self.bodystyle.configure('B.Treeview', background='lightgrey', font={'font':'Arial', 'size':8, 'type':'bold'})
         super().__init__(master)
 
         # modos de selección None|browse:solo uno|extended:varios(establecida por defecto)
-        self.config(selectmode='browse')
-        self.style = ttk.Style()
-        self.style.configure('TTreeview', font={'font':'Arial', 'size':10, 'type':'normal'})
-
+        self.config(selectmode='browse', style='B.Treeview')
         # encabezados)
         self.heading('#0', text='Arbol de Modulos')
-
+        
         # master de información en tkinter y tkinter.ttk
         self.insert(parent='', index=0, text='widgets info', iid='id_parent_info', tags=['parent_Info_Item', 'info_item'])
         # primer elemento con dos sub elementos
@@ -39,15 +37,15 @@ class TREEViEW(ttk.Treeview):
         self.insert(parent='id_parent_tkinter_lib', index=17, text='Text widget', iid='tkinter.Text', tags=['sub_Info_Item', 'info_item'])
 
         # segundo elemento con un sub elemento
-        self.insert(parent='id_parent_info', index=1, text='tkinter ttk lib', iid='id_parent_tkinter_ttk', tags='parent_Info_Item')
-        self.insert(parent='id_parent_tkinter_ttk', index=0, text='Button widget', iid='ttk.Button', tags='sub_Info_Item')
-        self.insert(parent='id_parent_tkinter_ttk', index=1, text='Treeview widget', iid='ttk.Treeview', tags='sub_Info_Item')
-        self.insert(parent='id_parent_tkinter_ttk', index=2, text='Notebook widget', iid='ttk.Notebook', tags='sub_Info_Item')
+        self.insert(parent='id_parent_info', index=1, text='tkinter ttk lib', iid='id_parent_tkinter_ttk', tags=['parent_Info_Item', 'info_item'])
+        self.insert(parent='id_parent_tkinter_ttk', index=0, text='Button widget', iid='ttk.Button', tags=['sub_Info_Item', 'info_item'])
+        self.insert(parent='id_parent_tkinter_ttk', index=1, text='Treeview widget', iid='ttk.Treeview', tags=['sub_Info_Item', 'info_item'])
+        self.insert(parent='id_parent_tkinter_ttk', index=2, text='Notebook widget', iid='ttk.Notebook', tags=['sub_Info_Item', 'info_item'])
 
         # Configuración por tags
-        self.tag_configure(tagname='parent_Info_Item', foreground='red')
+        # self.tag_configure(tagname='parent_Info_Item', foreground='red')
         self.tag_configure(tagname='special_sub_Info_Item', foreground='blue')
-        self.tag_configure(tagname='info_item', font={'font':'Arial', 'size':10, 'type':'normal'})
+        # self.tag_configure(tagname='info_item', font={'font':'Arial', 'size':8, 'type':'bold'})
 
 
 def lounchApp():

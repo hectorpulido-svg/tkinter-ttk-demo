@@ -18,7 +18,7 @@ class DEMO(Frame):
         # ---------------------------------------
         #               TREEVIEW PANEL
         self.treeview_panel = PanedWindow(self.master, orient='horizontal')
-        self.treeview_panel.config(sashrelief='raised', showhandle=True, opaqueresize=False)
+        self.treeview_panel.config(sashrelief='raised', showhandle=True, opaqueresize=False, background='lightgrey')
         self.treeview_panel.pack(fill='both', expand='true', side='left')
 
         # añade el treeview
@@ -38,7 +38,6 @@ class DEMO(Frame):
         # añade el notebook
         self.notebook = NOTEBOOK(self.notebook_panel)
         self.notebook_panel.add(self.notebook)
-        # self.notebook_panel.add(self.notebook, height=550)  # no borrar
 
         # ---------------------------------------
         #           EXTRA INFO PANEL
@@ -57,7 +56,6 @@ class DEMO(Frame):
         self.currentParItem = self.treeview.tag_bind(
             tagname='parent_Info_Item', sequence='<<TreeviewSelect>>', callback=self.responseParent_Item)
 
-        # self.master.bind('<Configure>', self.getSize) # no borrar
 
     def responseSub_Item(self, e):
         import importlib
@@ -78,9 +76,15 @@ class DEMO(Frame):
             self.extrainfo.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s' % (
                 str(mod), str(obj), cls2Binstace, str(cls_name)))
             self.notebook.overview_textbox.delete('1.0', END)
+
+            # self.notebook.overview_textbox.insert(
+            #     END, 'clase : ' + cls_name + '  ' + 'keys' + '\n\n' + str(cls2Binstace().keys())) # sin formato
+
             self.notebook.overview_textbox.insert(
-                END, 'clase : ' + cls_name + '  ' + 'keys' + '\n\n' + str(cls2Binstace().keys()))
-            self.getkey_labels(cls2Binstace)
+                END, 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n') # con formato
+
+            # self.getkey_labels(cls2Binstace)
+            self.keyformater(cls2Binstace)
 
             object_methods = [method_name for method_name in dir(cls2Binstace)
                   if callable(getattr(cls2Binstace, method_name))]
@@ -102,16 +106,33 @@ class DEMO(Frame):
         self.notebook.setTabTitle(self.notebook.first_tab, self.notebook.tab_label_1)
         self.notebook.setContentTitle(self.notebook.frameContent_tab_1, 'ventana de bienvenida')
 
-    def getkey_labels(self, obj):
-        w = master.with()
+    def getkey(self, elementList):
+        # t = len(elementList)
+        # r = 6
+        # c = int(t / r)
+        # i = 0
+        # for x in range(r):
+        #     for y in range(c):
+                # l = Label(self.notebook.overview_textbox, text=obj().keys()[i])
+                # l = Label(self.notebook.overview_textbox, text=label)
+                # l.grid(row=x, column=(y)
+                # i += 1
 
+        for i, element in enumerate(elementList):
+            self.notebook.overview_textbox.insert(END, elementList[i])
+
+
+    def keyformater(self, obj):
+        largest_element = max(obj().keys(), key=len)
+        min_lenght = len(largest_element) + 4
+        maped_list = list((map((lambda x: x.center(min_lenght, ' ')), obj().keys())))
+        self.getkey(maped_list)
+
+        print(largest_element +'\n')
+        print(maped_list)
 
     def overView(self, txt):
         self.notebook.overview_textbox.insert('1.0', txt)
-
-    # def getSize(self, e): # no borrar
-    #     self.notebook_panel.config(height=int(float(e.height) * 0.95))
-    #     self.notebook_panel.config(width=int(float(e.width) * 0.85))
 
 
 _overView = "En este demo utilizo el widget Notebook el cual se encuentra en la librería tkinter.ttk "\
