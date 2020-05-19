@@ -5,6 +5,9 @@ from modulos.treeviewclass import TREEViEW
 from modulos.notebookclass import NOTEBOOK
 from modulos.infoboxclass import INFOBOX
 
+# para depuración 
+import time
+
 
 class DEMO(Frame):
     '''
@@ -48,7 +51,7 @@ class DEMO(Frame):
         # el extrainfo_panel pertenece al notebook_panel
         self.notebook_panel.add(self.extrainfo_panel)
 
-        # coloca el overview_textbox
+        # coloca el overview
         self.extrainfo = INFOBOX(self.extrainfo_panel)
         self.extrainfo_panel.add(self.extrainfo)
         self.currentSubItem = self.treeview.tag_bind(
@@ -75,20 +78,18 @@ class DEMO(Frame):
             self.extrainfo.delete('1.0', END)
             self.extrainfo.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s' % (
                 str(mod), str(obj), cls2Binstace, str(cls_name)))
-            self.notebook.overview_textbox.delete('1.0', END)
+            self.notebook.overview.delete('1.0', END)
 
-            # self.notebook.overview_textbox.insert(
-            #     END, 'clase : ' + cls_name + '  ' + 'keys' + '\n\n' + str(cls2Binstace().keys())) # sin formato
-
-            self.notebook.overview_textbox.insert(
+            self.notebook.overview.insert(
                 END, 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n') # con formato
 
-            # self.getkey_labels(cls2Binstace)
-            self.keyformater(cls2Binstace)
+            self.getkey(list(cls2Binstace().keys()))
+            # self.keyformater(cls2Binstace)
 
             object_methods = [method_name for method_name in dir(cls2Binstace)
                   if callable(getattr(cls2Binstace, method_name))]
-            self.notebook.overview_textbox.insert(END, '\n\nmetodos de la clase\n\n' + str(object_methods))
+            self.notebook.overview.insert(END, '\n\nmetodos de la clase\n\n' + str(object_methods))
+
             self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name) )
             self.notebook.setContentTitle(self.notebook.frameContent_tab_1, str(cls2Binstace))
             
@@ -99,40 +100,23 @@ class DEMO(Frame):
 
 
     def responseParent_Item(self, e):
-        self.notebook.overview_textbox.delete('1.0', END)
-        self.overView(_overView)
+        self.notebook.overview.delete('1.0', END)
+        self.text_loader(_description)
         self.extrainfo.delete('1.0', END)
         self.extrainfo.insert('1.0',  self.treeview.selection()[0])
         self.notebook.setTabTitle(self.notebook.first_tab, self.notebook.tab_label_1)
         self.notebook.setContentTitle(self.notebook.frameContent_tab_1, 'ventana de bienvenida')
 
-    def getkey(self, elementList):
-        # t = len(elementList)
-        # r = 6
-        # c = int(t / r)
-        # i = 0
-        # for x in range(r):
-        #     for y in range(c):
-                # l = Label(self.notebook.overview_textbox, text=obj().keys()[i])
-                # l = Label(self.notebook.overview_textbox, text=label)
-                # l.grid(row=x, column=(y)
-                # i += 1
+    def getkey(self, elements):
+        
+        for i, element in enumerate(elements):
+            self.notebook.overview.insert(END, elements[i] + '\n')
 
-        for i, element in enumerate(elementList):
-            self.notebook.overview_textbox.insert(END, elementList[i])
+    def text_loader(self, txt):
+        self.notebook.overview.insert('1.0', txt)
 
 
-    def keyformater(self, obj):
-        largest_element = max(obj().keys(), key=len)
-        min_lenght = len(largest_element) + 4
-        maped_list = list((map((lambda x: x.center(min_lenght, ' ')), obj().keys())))
-        self.getkey(maped_list)
-
-    def overView(self, txt):
-        self.notebook.overview_textbox.insert('1.0', txt)
-
-
-_overView = "En este demo utilizo el widget Notebook el cual se encuentra en la librería tkinter.ttk "\
+_description = "En este demo utilizo el widget Notebook el cual se encuentra en la librería tkinter.ttk "\
     "construido con tres pestañas que contienen un frame cada una el cual puede llevar un titulo.\n"\
     "Para presentar los modulos que hacen el demo de los widgets, tanto de la librería tkinter "\
     "como de la librería tkinter.ttk, utilizo el widget Treevew que se encuentra en la misma librería\n"\
@@ -151,7 +135,7 @@ def lounchApp():
     height = '600'
     app.geometry(width + 'x' + height)
     demo = DEMO(app)
-    demo.overView(_overView)
+    demo.text_loader(_description)
     app.mainloop()
 
 
