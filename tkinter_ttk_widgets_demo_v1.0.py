@@ -18,6 +18,12 @@ class DEMO(Frame):
 
         super().__init__(master)
 
+
+        # ---------------------------------------
+        #               MENU BAR
+        self.menu = Menu(master)
+        self.menu.add_command(label='Ayuda', command='')
+        master.config(menu=self.menu)
         # ---------------------------------------
         #               TREEVIEW PANEL
         self.treeview_panel = PanedWindow(self.master, orient='horizontal')
@@ -61,7 +67,7 @@ class DEMO(Frame):
 
     def responseSub_Item(self, e):
         import importlib
-        global cls2Binstace, component
+        global cls2Binstace, component, cls_name
         module = self.treeview.selection()[0].split('.')[0]
 
         if module == 'ttk':
@@ -79,14 +85,14 @@ class DEMO(Frame):
                 str(mod), str(obj), cls2Binstace, str(cls_name)))
             self.notebook.overview.delete('1.0', END)
 
-            self.notebook.overview.insert(
-                END, 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n') # con formato
+            # self.notebook.overview.insert(
+            #     END, 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n') # con formato
 
             self.getkey(list(cls2Binstace().keys()))
 
-            object_methods = [method_name for method_name in dir(cls2Binstace)
-                  if callable(getattr(cls2Binstace, method_name))]
-            self.notebook.overview.insert(END, '\n\nmetodos de la clase\n\n' + str(object_methods))
+            # object_methods = [method_name for method_name in dir(cls2Binstace)
+            #       if callable(getattr(cls2Binstace, method_name))]
+            # self.notebook.overview.insert(END, '\n\nmetodos de la clase\n\n' + str(object_methods))
 
             self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name) )
             self.notebook.setContentTitle(self.notebook.frameContent_tab_1, str(cls2Binstace))
@@ -106,9 +112,26 @@ class DEMO(Frame):
         self.notebook.setContentTitle(self.notebook.frameContent_tab_1, 'ventana de bienvenida')
 
     def getkey(self, elements):
-        
-        for i, element in enumerate(elements):
-            self.notebook.overview.insert(END, elements[i] + '\n')
+        num_elements = len(elements)
+        columns = 4
+        rows = int(num_elements / columns)
+        indx = 0
+        self.notebook.overview.insert(
+            '1.end', 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n' + str(list(map(lambda x: x.center(20), elements)))) # con formato
+        # elements = list(map(lambda x: x.center(20), elements))
+        # print(elements)
+        # for column in range(0, columns):
+        #     for row in range(3, rows + 3):
+        #         # for indx, element in enumerate(elements):
+        #         self.notebook.overview.insert(str(row) + '.' + str(column), elements[indx])
+
+        #         indx += 1
+
+        object_methods = [method_name for method_name in dir(cls2Binstace)
+            if callable(getattr(cls2Binstace, method_name))]
+        self.notebook.overview.insert(END, '\n\nmetodos de la clase\n\n' + str(object_methods))
+        # for i, element in enumerate(elements):
+        #     self.notebook.overview.insert(END, elements[i] + '\n')
 
     def text_loader(self, txt):
         self.notebook.overview.insert('1.0', txt)
