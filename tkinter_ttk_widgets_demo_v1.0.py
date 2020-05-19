@@ -84,7 +84,6 @@ class DEMO(Frame):
                 END, 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n') # con formato
 
             self.getkey(list(cls2Binstace().keys()))
-            # self.keyformater(cls2Binstace)
 
             object_methods = [method_name for method_name in dir(cls2Binstace)
                   if callable(getattr(cls2Binstace, method_name))]
