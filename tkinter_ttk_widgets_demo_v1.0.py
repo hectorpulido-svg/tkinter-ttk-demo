@@ -1,9 +1,9 @@
 import tkinter
 from tkinter import *
 # from tkinter import ttk
-from modulos.treeviewclass import TREEViEW
-from modulos.notebookclass import NOTEBOOK
-from modulos.infoboxclass import INFOBOX
+from main_modulos.treeviewclass import TREEViEW
+from main_modulos.notebookclass import NOTEBOOK
+from main_modulos.infoboxclass import INFOBOX
 
 # para depuración 
 import time
@@ -59,7 +59,6 @@ class DEMO(Frame):
         self.currentParItem = self.treeview.tag_bind(
             tagname='parent_Info_Item', sequence='<<TreeviewSelect>>', callback=self.responseParent_Item)
 
-
     def responseSub_Item(self, e):
         import importlib
         global cls2Binstace, component
@@ -113,7 +112,6 @@ class DEMO(Frame):
 
     def text_loader(self, txt):
         self.notebook.overview.insert('1.0', txt)
-
 
 _description = "En este demo utilizo el widget Notebook el cual se encuentra en la librería tkinter.ttk "\
     "construido con tres pestañas que contienen un frame cada una el cual puede llevar un titulo.\n"\
