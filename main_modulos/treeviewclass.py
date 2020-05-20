@@ -6,10 +6,13 @@ class TREEViEW(ttk.Treeview):
     def __init__(self, master):
         super().__init__(master)
 
-        self.bodystyle = ttk.Style()
-        self.bodystyle.configure('Treeview', background='lightgrey')
-        # modos de selección None|browse:solo uno|extended:varios(establecida por defecto)
+        self.style = ttk.Style()
+        self.font = {'font':'Arial', 'size':12, 'type':'bold'}
+        self.style.configure("Treeview", foreground='black', background='lightgrey', font=(self.font['font'], self.font['size'], self.font['type']))
+        self.style.configure("Treeview.Heading", foreground='black', background='lightgrey', font=(self.font['font'], self.font['size'], self.font['type']))
+        self.style.configure("TkHeadingBackground", background='lightgrey')
         self.config(selectmode='browse', style='Treeview')
+
         # encabezados)
         self.heading('#0', text='Arbol de Modulos')
         
