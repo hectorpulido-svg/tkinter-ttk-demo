@@ -49,65 +49,60 @@ class DEMO(Frame):
 
         # ---------------------------------------
         #           EXTRA INFO PANEL
-        self.extrainfo_panel = PanedWindow(self.master, orient='vertical')
-        self.extrainfo_panel.config(sashrelief='raised')
-        self.extrainfo_panel.pack(fill='both', expand='true', side='bottom')
+        self.tips_panel = PanedWindow(self.master, orient='vertical')
+        self.tips_panel.config(sashrelief='raised')
+        self.tips_panel.pack(fill='both', expand='true', side='bottom')
 
-        # el extrainfo_panel pertenece al notebook_panel
-        self.notebook_panel.add(self.extrainfo_panel)
+        # el tips_panel pertenece al notebook_panel
+        self.notebook_panel.add(self.tips_panel)
 
         # coloca el overview
-        self.extrainfo = Text(self.extrainfo_panel)
-        self.extrainfo.config(borderwidth=2, fg='black', bg='lightgrey', height=10)
-        self.extrainfo_panel.add(self.extrainfo)
+        self.tips = Text(self.tips_panel)
+        self.tips.config(borderwidth=2, fg='black', bg='lightgrey')
+        self.tips_panel.add(self.tips, height=150, minsize=150)
         self.currentSubItem = self.treeview.tag_bind(
-            tagname='sub_Info_Item', sequence='<<TreeviewSelect>>', callback=self.responseSub_Item)
+            tagname='sub_Info_Item', sequence='<<TreeviewSelect>>', callback=self.onSub_Item)
         self.currentParItem = self.treeview.tag_bind(
-            tagname='parent_Info_Item', sequence='<<TreeviewSelect>>', callback=self.responseParent_Item)
+            tagname='parent_Info_Item', sequence='<<TreeviewSelect>>', callback=self.onParent_Item)
 
-    def responseSub_Item(self, e):
+    def onSub_Item(self, e):
         import importlib
         global cls2Binstace, component, cls_name
         module = self.treeview.selection()[0].split('.')[0]
+        try:
+            if module == 'ttk':
+                module = 'tkinter.ttk'
 
-        if module == 'ttk':
-            module = 'tkinter.ttk'
+            component = self.treeview.selection()[0].split('.')[1:]
 
-        component = self.treeview.selection()[0].split('.')[1:]
+            mod = importlib.import_module(name=module, package=module)
+            for cls_name in component:
+                cls2Binstace = getattr(mod, cls_name)
+                obj = {cls_name: cls2Binstace}
 
-        mod = importlib.import_module(name=module, package=module)
-        for cls_name in component:
-            cls2Binstace = getattr(mod, cls_name)
-            obj = {cls_name: cls2Binstace}
+                self.tips.delete('1.0', END)
+                self.tips.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s' % (
+                    str(mod), str(obj), cls2Binstace, str(cls_name)))
+                self.notebook.overview.delete('1.0', END)
 
-            self.extrainfo.delete('1.0', END)
-            self.extrainfo.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s' % (
-                str(mod), str(obj), cls2Binstace, str(cls_name)))
-            self.notebook.overview.delete('1.0', END)
+                self.getkey(list(cls2Binstace().keys()))
 
-            # self.notebook.overview.insert(
-            #     END, 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n') # con formato
-
-            self.getkey(list(cls2Binstace().keys()))
-
-            # object_methods = [method_name for method_name in dir(cls2Binstace)
-            #       if callable(getattr(cls2Binstace, method_name))]
-            # self.notebook.overview.insert(END, '\n\nmetodos de la clase\n\n' + str(object_methods))
-
-            self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name) )
-            self.notebook.setContentTitle(self.notebook.frameContent_tab_1, str(cls2Binstace))
-            
-            # TODO
-            # self.widgetdemo = Frame(self.notebook.frameContent_tab_2)
-            # self.widgetcached = cls2Binstace(self.widgetdemo, text='instancias cachada')
-            # self.widgetcached.pack(side='bottom')
+                self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name) )
+                self.notebook.setContentTitle(self.notebook.frameContent_tab_1, str(cls2Binstace))
+                
+                # TODO
+                # self.widgetdemo = Frame(self.notebook.frameContent_tab_2)
+                # self.widgetcached = cls2Binstace(self.widgetdemo, text='instancias cachada')
+                # self.widgetcached.pack(side='bottom')
+        except:
+            pass
 
 
-    def responseParent_Item(self, e):
+    def onParent_Item(self, e):
         self.notebook.overview.delete('1.0', END)
         self.text_loader(_description)
-        self.extrainfo.delete('1.0', END)
-        self.extrainfo.insert('1.0',  self.treeview.selection()[0])
+        self.tips.delete('1.0', END)
+        self.tips.insert('1.0',  self.treeview.selection()[0])
         self.notebook.setTabTitle(self.notebook.first_tab, self.notebook.tab_label_1)
         self.notebook.setContentTitle(self.notebook.frameContent_tab_1, 'ventana de bienvenida')
 
@@ -117,15 +112,18 @@ class DEMO(Frame):
         rows = int(num_elements / columns)
         indx = 0
         self.notebook.overview.insert(
-            '1.end', 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n' + str(list(map(lambda x: x.center(20), elements)))) # con formato
-        # elements = list(map(lambda x: x.center(20), elements))
-        # print(elements)
-        # for column in range(0, columns):
-        #     for row in range(3, rows + 3):
-        #         # for indx, element in enumerate(elements):
-        #         self.notebook.overview.insert(str(row) + '.' + str(column), elements[indx])
+            '1.end', 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n') # + str(list(map(lambda x: x.center(20), elements)))) # con formato
+        
+        elements = list(map(lambda x: x.rjust(20), elements))
+        print(elements)
+        for column in range(0, columns):
+            self.notebook.overview.insert(str(rows) + '.' + str(column), elements[indx])
+            indx += 1
+            for row in range(rows, rows * 2):
+                # for indx, element in enumerate(elements):
+                self.notebook.overview.insert(str(row) + '.' + str(column), elements[indx])
+                indx += 1
 
-        #         indx += 1
 
         object_methods = [method_name for method_name in dir(cls2Binstace)
             if callable(getattr(cls2Binstace, method_name))]
