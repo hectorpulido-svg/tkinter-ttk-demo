@@ -3,7 +3,6 @@ from tkinter import *
 # from tkinter import ttk
 from main_modulos.treeviewclass import TREEViEW
 from main_modulos.notebookclass import NOTEBOOK
-from main_modulos.infoboxclass import INFOBOX
 
 # para depuración 
 import time
@@ -58,7 +57,8 @@ class DEMO(Frame):
         self.notebook_panel.add(self.extrainfo_panel)
 
         # coloca el overview
-        self.extrainfo = INFOBOX(self.extrainfo_panel)
+        self.extrainfo = Text(self.extrainfo_panel)
+        self.extrainfo.config(borderwidth=2, fg='black', bg='lightgrey', height=10)
         self.extrainfo_panel.add(self.extrainfo)
         self.currentSubItem = self.treeview.tag_bind(
             tagname='sub_Info_Item', sequence='<<TreeviewSelect>>', callback=self.responseSub_Item)

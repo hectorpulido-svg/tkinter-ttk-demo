@@ -4,12 +4,12 @@ from tkinter import ttk
 class TREEViEW(ttk.Treeview):
 
     def __init__(self, master):
-        self.bodystyle = ttk.Style()
-        self.bodystyle.configure('B.Treeview', background='lightgrey', font={'font':'Arial', 'size':8, 'type':'bold'})
         super().__init__(master)
 
+        self.bodystyle = ttk.Style()
+        self.bodystyle.configure('Treeview', background='lightgrey')
         # modos de selección None|browse:solo uno|extended:varios(establecida por defecto)
-        self.config(selectmode='browse', style='B.Treeview')
+        self.config(selectmode='browse', style='Treeview')
         # encabezados)
         self.heading('#0', text='Arbol de Modulos')
         
