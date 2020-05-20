@@ -4,7 +4,7 @@ from tkinter import *
 from main_modulos.treeviewclass import TREEViEW
 from main_modulos.notebookclass import NOTEBOOK
 
-# para depuración 
+# para depuración
 import time
 
 
@@ -17,7 +17,6 @@ class DEMO(Frame):
 
         super().__init__(master)
 
-
         # ---------------------------------------
         #               MENU BAR
         self.menu = Menu(master)
@@ -26,7 +25,8 @@ class DEMO(Frame):
         # ---------------------------------------
         #               TREEVIEW PANEL
         self.treeview_panel = PanedWindow(self.master, orient='horizontal')
-        self.treeview_panel.config(sashrelief='raised', showhandle=True, opaqueresize=False, background='lightgrey')
+        self.treeview_panel.config(
+            sashrelief='raised', showhandle=True, opaqueresize=False, background='lightgrey')
         self.treeview_panel.pack(fill='both', expand='true', side='left')
 
         # añade el treeview
@@ -36,7 +36,8 @@ class DEMO(Frame):
         # ---------------------------------------
         #               NOTEBOOK PANEL
         self.notebook_panel = PanedWindow(self.master, orient='vertical')
-        self.notebook_panel.config(sashrelief='raised', showhandle=True, opaqueresize=False)
+        self.notebook_panel.config(
+            sashrelief='raised', showhandle=True, opaqueresize=False)
         self.notebook_panel.pack(fill='both', expand='true', side='top')
 
         # el notebook_panel pertenece al treeview_panel
@@ -69,70 +70,79 @@ class DEMO(Frame):
         import importlib
         global cls2Binstace, component, cls_name
         module = self.treeview.selection()[0].split('.')[0]
-        try:
-            if module == 'ttk':
-                module = 'tkinter.ttk'
+        if module == 'ttk':
+            module = 'tkinter.ttk'
 
-            component = self.treeview.selection()[0].split('.')[1:]
+        component = self.treeview.selection()[0].split('.')[1:]
 
-            mod = importlib.import_module(name=module, package=module)
-            for cls_name in component:
-                cls2Binstace = getattr(mod, cls_name)
-                obj = {cls_name: cls2Binstace}
+        mod = importlib.import_module(name=module, package=module)
+        for cls_name in component:
+            cls2Binstace = getattr(mod, cls_name)
+            obj = {cls_name: cls2Binstace}
 
-                self.tips.delete('1.0', END)
-                self.tips.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s' % (
-                    str(mod), str(obj), cls2Binstace, str(cls_name)))
-                self.notebook.overview.delete('1.0', END)
+            self.tips.delete('1.0', END)
+            self.tips.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s' % (
+                str(mod), str(obj), cls2Binstace, str(cls_name)))
 
-                self.getkey(list(cls2Binstace().keys()))
+        self.notebook.overview.delete('1.0', END)
 
-                self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name) )
-                self.notebook.setContentTitle(self.notebook.frameContent_tab_1, str(cls2Binstace))
-                
-                # TODO
-                # self.widgetdemo = Frame(self.notebook.frameContent_tab_2)
-                # self.widgetcached = cls2Binstace(self.widgetdemo, text='instancias cachada')
-                # self.widgetcached.pack(side='bottom')
-        except:
-            pass
+        self.getkey(list(cls2Binstace().keys()))
 
+        self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name))
+        self.notebook.setContentTitle(self.notebook.frameContent_tab_1, str(cls2Binstace))
+
+        # TODO
+        # self.widgetdemo = Frame(self.notebook.frameContent_tab_2)
+        # self.widgetcached = cls2Binstace(self.widgetdemo, text='instancias cachada')
+        # self.widgetcached.pack(side='bottom')
 
     def onParent_Item(self, e):
         self.notebook.overview.delete('1.0', END)
         self.text_loader(_description)
         self.tips.delete('1.0', END)
         self.tips.insert('1.0',  self.treeview.selection()[0])
-        self.notebook.setTabTitle(self.notebook.first_tab, self.notebook.tab_label_1)
-        self.notebook.setContentTitle(self.notebook.frameContent_tab_1, 'ventana de bienvenida')
+        self.notebook.setTabTitle(
+            self.notebook.first_tab, self.notebook.tab_label_1)
+        self.notebook.setContentTitle(
+            self.notebook.frameContent_tab_1, 'ventana de bienvenida')
 
     def getkey(self, elements):
         num_elements = len(elements)
-        columns = 4
+        columns = 5
         rows = int(num_elements / columns)
         indx = 0
         self.notebook.overview.insert(
-            '1.end', 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n') # + str(list(map(lambda x: x.center(20), elements)))) # con formato
-        
-        elements = list(map(lambda x: x.rjust(20), elements))
-        print(elements)
-        for column in range(0, columns):
-            self.notebook.overview.insert(str(rows) + '.' + str(column), elements[indx])
-            indx += 1
+            '1.end', 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n')
+        max_lenght_element = max(list(map(lambda x: len(x), elements)))
+        elements = list(map(lambda x: x.center(max_lenght_element + 2), elements))
+
+        # print(len(elements))
+        for column in range(columns, columns * 2):
+            self.lb = Label(self.notebook.overview, text=elements[indx], width= max_lenght_element)
+            self.lb.grid(row=rows, column=column)
+            # self.notebook.overview.insert(
+            #     str(rows) + '.' + str(column), self.lb)
+            
             for row in range(rows, rows * 2):
                 # for indx, element in enumerate(elements):
-                self.notebook.overview.insert(str(row) + '.' + str(column), elements[indx])
+
+                self.lb = Label(self.notebook.overview, text=elements[indx], width= max_lenght_element)
+                self.lb.grid(row=row, column=column)
+                # self.notebook.overview.insert(
+                #     str(row) + '.' + str(column), self.lb)
                 indx += 1
+            # indx += 1
 
-
-        object_methods = [method_name for method_name in dir(cls2Binstace)
-            if callable(getattr(cls2Binstace, method_name))]
-        self.notebook.overview.insert(END, '\n\nmetodos de la clase\n\n' + str(object_methods))
-        # for i, element in enumerate(elements):
-        #     self.notebook.overview.insert(END, elements[i] + '\n')
+        object_methods = [method_name for method_name in dir(cls2Binstace)if callable(getattr(cls2Binstace, method_name))]
+        self.notebook.overview.insert(
+            END, '\n\n metodos de la clase\n\n' + str(object_methods))
+        for i, element in enumerate(elements):
+            print(element)
+            self.notebook.overview.insert(END, elements[i] + '\n')
 
     def text_loader(self, txt):
         self.notebook.overview.insert('1.0', txt)
+
 
 _description = "En este demo utilizo el widget Notebook el cual se encuentra en la librería tkinter.ttk "\
     "construido con tres pestañas que contienen un frame cada una el cual puede llevar un titulo.\n"\
@@ -144,6 +154,7 @@ _description = "En este demo utilizo el widget Notebook el cual se encuentra en 
     "y la transparencia de la ventana (que requiere un administrador de ventanas de composición en X11).\n"\
     "La idea básica para tkinter.ttk es separar, en la medida de lo posible, "\
     "el código que implementa el comportamiento de un widget del código que implementa su apariencia.\n\n "\
+
 
 
 def lounchApp():
