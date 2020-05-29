@@ -114,24 +114,11 @@ class DEMO(Frame):
         self.notebook.overview.insert(
             '1.end', 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n')
         max_lenght_element = max(list(map(lambda x: len(x), elements)))
-        elements = list(map(lambda x: x.center(max_lenght_element + 2), elements))
 
-        # print(len(elements))
-        for column in range(columns, columns * 2):
-            self.lb = Label(self.notebook.overview, text=elements[indx], width= max_lenght_element)
-            self.lb.grid(row=rows, column=column)
-            # self.notebook.overview.insert(
-            #     str(rows) + '.' + str(column), self.lb)
-            
-            for row in range(rows, rows * 2):
-                # for indx, element in enumerate(elements):
+        for indx, element in enumerate(elements):
 
-                self.lb = Label(self.notebook.overview, text=elements[indx], width= max_lenght_element)
-                self.lb.grid(row=row, column=column)
-                # self.notebook.overview.insert(
-                #     str(row) + '.' + str(column), self.lb)
-                indx += 1
-            # indx += 1
+            self.notebook.overview.insert(
+                self.notebook.overview.index(INSERT), element + ', ')
 
         object_methods = [method_name for method_name in dir(cls2Binstace)if callable(getattr(cls2Binstace, method_name))]
         self.notebook.overview.insert(
