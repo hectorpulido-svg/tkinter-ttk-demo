@@ -33,16 +33,16 @@ class NOTEBOOK(ttk.Notebook):
         self.tab_label_2 = 'pestaña 2'
         self.tab_label_3 = 'pestaña 3'
         # ********* first tab frame content ****************
-        self.frameContent_tab_1 = LabelFrame(self.first_tab, labelanchor='n', text='ventana de bienvenida', relief='raised')
-        self.frameContent_tab_1.config(
+        self.infoTab = LabelFrame(self.first_tab, labelanchor='n', text='ventana de bienvenida', relief='raised')
+        self.infoTab.config(
             borderwidth=1,
             fg='black',
             bg='lightgrey',
             font=(self.font['font'], self.font['size'], self.font['type']))
 
         # ********* second tab frame content ****************
-        self.frameContent_tab_2 = LabelFrame(self.second_tab, labelanchor='n', text='Frame 2', relief='raised')
-        self.frameContent_tab_2.config(
+        self.demoTab = LabelFrame(self.second_tab, labelanchor='n', text='Frame 2', relief='raised')
+        self.demoTab.config(
             borderwidth=1,
             fg='black',
             bg='lightgrey',
@@ -57,7 +57,7 @@ class NOTEBOOK(ttk.Notebook):
             font=(self.font['font'], self.font['size'], self.font['type']))
 
         # ******** first tab text box ************
-        self.overview = Text(self.frameContent_tab_1)
+        self.overview = Text(self.infoTab)
         self.overview.config(
             borderwidth=1, fg='black',
             bg='lightgrey',
@@ -72,8 +72,8 @@ class NOTEBOOK(ttk.Notebook):
         self.add(child=self.second_tab, text=self.tab_label_2)
         self.add(child=self.therth_tab, text=self.tab_label_3)
 
-        self.frameContent_tab_1.pack(expand=True, fill='both')
-        self.frameContent_tab_2.pack(expand=True, fill='both')
+        self.infoTab.pack(expand=True, fill='both')
+        self.demoTab.pack(expand=True, fill='both')
         self.frameContent_tab_3.pack(expand=True, fill='both')
 
         self.overview.pack(expand=True, fill='both', side='top')

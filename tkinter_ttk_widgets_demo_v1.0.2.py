@@ -1,11 +1,10 @@
+# -*- coding: utf-8 -*-
+#!usr/bin/python3
+
 import tkinter
 from tkinter import *
-# from tkinter import ttk
-from main_modulos.treeviewclass import TREEViEW
+from main_modulos.treeviewclass import TREEVIEW
 from main_modulos.notebookclass import NOTEBOOK
-
-# para depuración
-import time
 
 
 class DEMO(Frame):
@@ -14,14 +13,20 @@ class DEMO(Frame):
     '''
 
     def __init__(self, master, title=''):
-
         super().__init__(master)
 
         # ---------------------------------------
         #               MENU BAR
-        self.menu = Menu(master)
-        self.menu.add_command(label='Ayuda', command='')
-        master.config(menu=self.menu)
+        self.menubar = Menu(master)
+
+        self.menu = Menu(self.menubar, tearoff=0)
+        self.menu.add_command(label='Abrir', command='')
+        self.menu.add_separator()
+        self.menu.add_command(label='Salir', command=self.exit)
+
+        self.menubar.add_cascade(label='Archivo', menu=self.menu)
+
+        master.config(menu=self.menubar)
         # ---------------------------------------
         #               TREEVIEW PANEL
         self.treeview_panel = PanedWindow(self.master, orient='horizontal')
@@ -30,7 +35,7 @@ class DEMO(Frame):
         self.treeview_panel.pack(fill='both', expand='true', side='left')
 
         # añade el treeview
-        self.treeview = TREEViEW(self.treeview_panel)
+        self.treeview = TREEVIEW(self.treeview_panel)
         self.treeview_panel.add(self.treeview)
 
         # ---------------------------------------
@@ -61,40 +66,13 @@ class DEMO(Frame):
         self.tips = Text(self.tips_panel)
         self.tips.config(borderwidth=2, fg='black', bg='lightgrey')
         self.tips_panel.add(self.tips, height=150, minsize=150)
-        self.currentSubItem = self.treeview.tag_bind(
-            tagname='sub_Info_Item', sequence='<<TreeviewSelect>>', callback=self.onSub_Item)
-        self.currentParItem = self.treeview.tag_bind(
-            tagname='parent_Info_Item', sequence='<<TreeviewSelect>>', callback=self.onParent_Item)
+        
+        # eventos
+        self.treeview.tag_bind(tagname='parent_item', sequence='<<TreeviewSelect>>', callback=self.onParent_Item)
+        self.treeview.tag_bind(tagname='child_item', sequence='<<TreeviewSelect>>', callback=self.onchild_item)
+        self.treeview.tag_bind(tagname='test', sequence='<ButtonRelease>', callback=self.showwidgetdemo)
 
-    def onSub_Item(self, e):
-        import importlib
-        global cls2Binstace, component, cls_name
-        module = self.treeview.selection()[0].split('.')[0]
-        if module == 'ttk':
-            module = 'tkinter.ttk'
-
-        component = self.treeview.selection()[0].split('.')[1:]
-
-        mod = importlib.import_module(name=module, package=module)
-        for cls_name in component:
-            cls2Binstace = getattr(mod, cls_name)
-            obj = {cls_name: cls2Binstace}
-
-            self.tips.delete('1.0', END)
-            self.tips.insert(END, 'Origen : %s \nObjeto : %s \nclase : %s \nComponente : %s' % (
-                str(mod), str(obj), cls2Binstace, str(cls_name)))
-
-        self.notebook.overview.delete('1.0', END)
-
-        self.getkey(list(cls2Binstace().keys()))
-
-        self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name))
-        self.notebook.setContentTitle(self.notebook.frameContent_tab_1, str(cls2Binstace))
-
-        # TODO
-        # self.widgetdemo = Frame(self.notebook.frameContent_tab_2)
-        # self.widgetcached = cls2Binstace(self.widgetdemo, text='instancias cachada')
-        # self.widgetcached.pack(side='bottom')
+        self.demoState = False
 
     def onParent_Item(self, e):
         self.notebook.overview.delete('1.0', END)
@@ -104,7 +82,78 @@ class DEMO(Frame):
         self.notebook.setTabTitle(
             self.notebook.first_tab, self.notebook.tab_label_1)
         self.notebook.setContentTitle(
-            self.notebook.frameContent_tab_1, 'ventana de bienvenida')
+            self.notebook.infoTab, 'ventana de bienvenida')
+
+        self.cleanDemoTab()
+
+    def onchild_item(self, e):
+
+        self.selection = self.treeview.selection()[0].split('.')
+
+        if len(self.selection) == 3:
+            self.package = self.selection[0]
+            self.module = self.selection[1]
+            self.component = self.selection[2:]
+            self.module = self.package + '.' + self.module
+        if len(self.selection) == 2:
+            self.module = self.selection[0]
+            self.component = self.selection[1:]
+
+        self.modImport()
+
+    def modImport(self):
+
+        import importlib
+        global cls2Binstance, component, cls_name
+        mod = importlib.import_module(name=self.module, package=self.module)
+    
+        for cls_name in self.component:
+            cls2Binstance = getattr(mod, cls_name)
+            obj = {cls_name: cls2Binstance}
+
+        self.notebook.overview.delete('1.0', END)
+        # ------------- fin de la carga --------------------------------------
+        self.tips.delete('1.0', END)
+        self.tips.insert(
+            END, 'Origen : %s \nObjeto : %s,\nclase : %s,\nComponente : %s,' % (
+            str(mod), str(obj), cls2Binstance, str(cls_name)))
+
+        # TODO
+        # hay hacer hacer algo con esto
+        try:
+
+            self.getkey(cls2Binstance().keys())
+            self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name))
+            self.notebook.setContentTitle(self.notebook.infoTab, str(cls2Binstance))
+        except:
+
+            self.notebook.setTabTitle(self.notebook.first_tab, 'Descripción')
+            self.notebook.setContentTitle(self.notebook.infoTab, str(cls2Binstance))
+        # -------------------------------------------------------
+        # Esto funciona pero hay que hacer algo mejor
+        # if cls2Binstance.__getattribute__(self, '_description'):
+        #     self.text_loader
+    
+    def showwidgetdemo(self, e):
+        '''
+            Presenta un ejemplo de clase
+        '''
+        if self.demoState:
+            self.widgetdemo.destroy()
+        
+        self.widgetdemo = cls2Binstance(self.notebook.demoTab)
+        self.getkey(self.widgetdemo._keys())
+        self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name))
+        self.notebook.setContentTitle(self.notebook.infoTab, str(cls2Binstance))
+        self.widgetdemo.pack()
+        self.demoState = True
+    
+    def cleanDemoTab(self):
+        
+        if self.demoState:
+            self.widgetdemo.destroy()
+            self.demoSate = False
+            
 
     def getkey(self, elements):
         num_elements = len(elements)
@@ -113,22 +162,22 @@ class DEMO(Frame):
         indx = 0
         self.notebook.overview.insert(
             '1.end', 'clase : ' + cls_name + '  ' + 'opciones de configuración (keys)' + '\n\n')
-        max_lenght_element = max(list(map(lambda x: len(x), elements)))
 
         for indx, element in enumerate(elements):
 
             self.notebook.overview.insert(
                 self.notebook.overview.index(INSERT), element + ', ')
 
-        object_methods = [method_name for method_name in dir(cls2Binstace)if callable(getattr(cls2Binstace, method_name))]
+        object_methods = [method_name for method_name in dir(cls2Binstance)if callable(getattr(cls2Binstance, method_name))]
         self.notebook.overview.insert(
-            END, '\n\n metodos de la clase\n\n' + str(object_methods))
-        for i, element in enumerate(elements):
-            print(element)
-            self.notebook.overview.insert(END, elements[i] + '\n')
+            END, '\n\n metodos de la clase\n\n' + str(object_methods) + '\n')
+
 
     def text_loader(self, txt):
         self.notebook.overview.insert('1.0', txt)
+    
+    def exit(self):
+        self.quit()
 
 
 _description = "En este demo utilizo el widget Notebook el cual se encuentra en la librería tkinter.ttk "\

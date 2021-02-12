@@ -5,7 +5,7 @@ import sys
 import os
 # cwd = os.path.abspath(os.sys.path[0])
 # print(cwd)
-class TREEVIEW(ttk.Treeview):
+class MODTREEVIEW(ttk.Treeview):
     '''
     Árbol de modulos
 
@@ -42,7 +42,7 @@ class TREEVIEW(ttk.Treeview):
 
 def lounchApp():
     app = Tk()
-    treeview = TREEVIEW(app)
+    treeview = MODTREEVIEW(app)
     treeview.pack(fill='both', expand='true')
     app.mainloop()
 

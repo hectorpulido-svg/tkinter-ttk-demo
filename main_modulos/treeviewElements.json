@@ -1,0 +1,348 @@
+{
+    "tree": 
+        [
+            {
+                "parent":
+                    {
+                        "parent": "",
+                        "index": 0,
+                        "text": "tkinter lib",
+                        "iid": "id_parent_tkinter_lib",
+                        "tags": ["parent_item", "info_item"]
+                        
+                    }
+            },
+            {
+                "childs": 
+                        [
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 0,
+                                "text": "Tk",
+                                "iid": "tkinter.Tk",
+                                "tags": ["child_item", "info_item", "test"]
+                            },
+                            
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 1,
+                                "text": "Button",
+                                "iid": "tkinter.Button",
+                                "tags": ["child_item", "info_item", "test"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 2,
+                                "text": "Canvas",
+                                "iid": "tkinter.Canvas",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 3,
+                                "text": "Check button",
+                                "iid": "tkinter.Checkbutton",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 4,
+                                "text": "Entry",
+                                "iid": "tkinter.Entry",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 5,
+                                "text": "Frame",
+                                "iid": "tkinter.Frame",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 6,
+                                "text": "Label",
+                                "iid": "tkinter.Label",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 7,
+                                "text": "Label Frame",
+                                "iid": "tkinter.LabelFrame",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 8,
+                                "text": "List box",
+                                "iid": "tkinter.Listbox",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 9,
+                                "text": "Menu",
+                                "iid": "tkinter.Menu",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 10, 
+                                "text": "Menu button",
+                                "iid": "tkinter.Menubutton",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 11,
+                                "text": "Message",
+                                "iid": "tkinter.Message",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 12,
+                                "text": "Option Menu",
+                                "iid": "tkinter.OptionMenu",
+                                "tags": ["special_child_item", "child_item", "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 13,
+                                "text": "PanedWindow",
+                                "iid": "tkinter.PanedWindow",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 14,
+                                "text": "Radiobutton",
+                                "iid": "tkinter.Radiobutton",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 15,
+                                "text": "Scale",
+                                "iid": "tkinter.Scale",
+                                "tags": ["child_item",  "info_item"] 
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 16,
+                                "text": "Scrollbar",
+                                "iid": "tkinter.Scrollbar",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 17,
+                                "text": "Spinbox",
+                                "iid": "tkinter.Spinbox",
+                                "tags": ["child_item",  "info_item"] 
+                            },
+                            {
+                                "parent": "id_parent_tkinter_lib",
+                                "index": 18,
+                                "text": "Text",
+                                "iid": "tkinter.Text",
+                                "tags": ["child_item",  "info_item"]
+                            }
+                            
+                        ]
+            },
+            {
+                "parent":
+                    {
+                        "parent": "",
+                        "index": 1,
+                        "text": "tkinter ttk lib",
+                        "iid": "id_parent_tkinter_ttk",
+                        "tags": ["parent_item", "info_item"]
+                    }
+            },
+            {
+                "childs":
+                        [
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 0,
+                                "text": "Button",
+                                "iid": "tkinter.ttk.Button",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 1,
+                                "text": "Check button",
+                                "iid": "tkinter.ttk.Checkbutton",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 2,
+                                "text": "Combo box",
+                                "iid": "tkinter.ttk.Combobox",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 3,
+                                "text": "Entry",
+                                "iid": "tkinter.ttk.Entry",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 4,
+                                "text": "Frame",
+                                "iid": "tkinter.ttk.Frame",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 5,
+                                "text": "Label",
+                                "iid": "tkinter.ttk.Label",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 6,
+                                "text": "Labeled Scale",
+                                "iid": "tkinter.ttk.LabeledScale",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 7,
+                                "text": "Label frame",
+                                "iid": "tkinter.ttk.Labelframe",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 8,
+                                "text": "Menu button",
+                                "iid": "tkinter.ttk.Menubutton",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 9,
+                                "text": "Notebook",
+                                "iid": "tkinter.ttk.Notebook",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 10,
+                                "text": "Option Menu",
+                                "iid": "tkinter.ttk.OptionMenu",
+                                "tags": ["special_child_item", "child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 11,
+                                "text": "Paned window",
+                                "iid": "tkinter.ttk.Panedwindow",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 12,
+                                "text": "Progress bar",
+                                "iid": "tkinter.ttk.Progressbar",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 13,
+                                "text": "Radio button",
+                                "iid": "tkinter.ttk.Radiobutton",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 14,
+                                "text": "Scale",
+                                "iid": "tkinter.ttk.Scale",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 15,
+                                "text": "Scroll bar",
+                                "iid": "tkinter.ttk.Scrollbar",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 16,
+                                "text": "Separator",
+                                "iid": "tkinter.ttk.Separator",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 17,
+                                "text": "Size grip",
+                                "iid": "tkinter.ttk.Sizegrip",
+                                "tags": ["child_item",  "info_item"]
+                            },
+                            {
+                                "parent": "id_parent_tkinter_ttk",
+                                "index": 18,
+                                "text": "Treeview",
+                                "iid": "tkinter.ttk.Treeview",
+                                "tags": ["child_item",  "info_item"]
+                            }
+                        ]
+            },
+            {
+                "parent":
+                    {
+                        "parent": "",
+                        "index": 2,
+                        "text": "modulos de prueba",
+                        "iid": "id_parent_modulos_de_prueba",
+                        "tags": ["parent_item", "info_item"]
+                    }
+            },
+            {
+                "childs": 
+                        [   
+                            {
+                                "parent": "id_parent_modulos_de_prueba",
+                                "index": 0,
+                                "text": "Boton simple",
+                                "iid": "main_modulos.tk_button.BUTTON",
+                                "tags": ["child_item", "test"]
+                            },
+                            {
+                                "parent": "id_parent_modulos_de_prueba",
+                                "index": 1,
+                                "text": "Simulador de pantalla LED",
+                                "iid": "main_modulos.ledSS.DISPLAY",
+                                "tags": ["child_item", "test"]
+                            },
+                            {
+                                "parent": "id_parent_modulos_de_prueba",
+                                "index": 2,
+                                "text": "Reloj del Sistema",
+                                "iid": "main_modulos.systemclock.SYSTEMCLOCK",
+                                "tags": ["child_item", "test"]
+                            },
+                            {
+                                "parent": "id_parent_modulos_de_prueba",
+                                "index": 3,
+                                "text": "Boton on/off",
+                                "iid": "main_modulos.btn.CBUTTON",
+                                "tags": ["child_item", "test"]
+                            }
+                        ]
+            }
+            
+        ]
+}
