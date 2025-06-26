@@ -115,45 +115,28 @@ class DEMO(Frame):
         # ------------- fin de la carga --------------------------------------
         self.tips.delete('1.0', END)
         self.tips.insert(
-            END, 'Origen : %s \nObjeto : %s,\nclase : %s,\nComponente : %s,' % (
-            str(mod), str(obj), cls2Binstance, str(cls_name)))
-
-        # TODO
-        # hay hacer hacer algo con esto
-        try:
-
-            self.getkey(cls2Binstance().keys())
-            self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name))
-            self.notebook.setContentTitle(self.notebook.infoTab, str(cls2Binstance))
-        except:
-
-            self.notebook.setTabTitle(self.notebook.first_tab, 'Descripción')
-            self.notebook.setContentTitle(self.notebook.infoTab, str(cls2Binstance))
-        # -------------------------------------------------------
-        # Esto funciona pero hay que hacer algo mejor
-        # if cls2Binstance.__getattribute__(self, '_description'):
-        #     self.text_loader
+            END, 'Origen : %s \nObjeto : %s, \nComponente : %s,' % (
+            str(mod), str(obj) , str(cls_name)))
     
     def showwidgetdemo(self, e):
         '''
             Presenta un ejemplo de clase
         '''
-        if self.demoState:
-            self.widgetdemo.destroy()
-            self.demoSate = False
-        try:
-            self.widgetdemo = cls2Binstance(str(self.notebook.demoTab))
-        except:
-            self.widgetdemo = cls2Binstance(self.notebook.demoTab)
+        self.cleanDemoTab()
+
+        if ('ttk.Tk' in str(cls2Binstance)) or ('tkinter.Tk' in str(cls2Binstance)):
+            self.widgetdemo = cls2Binstance()
         else:
-            pass
+            self.widgetdemo = cls2Binstance(self.notebook.demoTab)
+
         self.getkey(self.widgetdemo.keys())
         self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name))
         self.notebook.setContentTitle(self.notebook.infoTab, str(cls2Binstance))
         try:
             self.widgetdemo.pack()
         except:
-            self.widgetdemo
+            pass
+
         self.demoState = True
     
     def cleanDemoTab(self):
