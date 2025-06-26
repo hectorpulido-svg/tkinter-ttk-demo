@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #!usr/bin/python3
 
-import tkinter
-from tkinter import *
+from tkinter import Tk, Frame, Menu, PanedWindow, Text, END, INSERT
 from main_modulos.treeviewclass import TREEVIEW
 from main_modulos.notebookclass import NOTEBOOK
 
