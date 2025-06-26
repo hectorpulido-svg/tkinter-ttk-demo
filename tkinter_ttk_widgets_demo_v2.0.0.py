@@ -126,6 +126,7 @@ class DEMO(Frame):
 
         if ('ttk.Tk' in str(cls2Binstance)) or ('tkinter.Tk' in str(cls2Binstance)):
             self.widgetdemo = cls2Binstance()
+            self.widgetdemo.protocol("WM_DELETE_WINDOW", self.cleanDemoTab)
         else:
             self.widgetdemo = cls2Binstance(self.notebook.demoTab)
 
@@ -140,10 +141,9 @@ class DEMO(Frame):
         self.demoState = True
     
     def cleanDemoTab(self):
-        
         if self.demoState:
             self.widgetdemo.destroy()
-            self.demoSate = False
+            self.demoState = False
             
     def getkey(self, elements):
         num_elements = len(elements)
