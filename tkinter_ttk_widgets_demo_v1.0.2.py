@@ -140,12 +140,20 @@ class DEMO(Frame):
         '''
         if self.demoState:
             self.widgetdemo.destroy()
-        
-        self.widgetdemo = cls2Binstance(self.notebook.demoTab)
-        self.getkey(self.widgetdemo._keys())
+            self.demoSate = False
+        try:
+            self.widgetdemo = cls2Binstance(str(self.notebook.demoTab))
+        except:
+            self.widgetdemo = cls2Binstance(self.notebook.demoTab)
+        else:
+            pass
+        self.getkey(self.widgetdemo.keys())
         self.notebook.setTabTitle(self.notebook.first_tab, 'opciones de configuración y metodos del widget %s ' % (cls_name))
         self.notebook.setContentTitle(self.notebook.infoTab, str(cls2Binstance))
-        self.widgetdemo.pack()
+        try:
+            self.widgetdemo.pack()
+        except:
+            self.widgetdemo
         self.demoState = True
     
     def cleanDemoTab(self):
