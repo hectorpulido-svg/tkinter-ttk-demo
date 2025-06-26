@@ -4,7 +4,7 @@
 # -------------------------------
 # Un simple boton de tkinter
 
-from tkinter import Button, Label, Tk, mainloop
+from tkinter import Button, Tk, mainloop
 
 class BUTTON(Button):
     '''
