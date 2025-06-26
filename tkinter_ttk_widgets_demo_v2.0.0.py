@@ -145,7 +145,6 @@ class DEMO(Frame):
             self.widgetdemo.destroy()
             self.demoSate = False
             
-
     def getkey(self, elements):
         num_elements = len(elements)
         columns = 5
@@ -163,13 +162,11 @@ class DEMO(Frame):
         self.notebook.overview.insert(
             END, '\n\n metodos de la clase\n\n' + str(object_methods) + '\n')
 
-
     def text_loader(self, txt):
         self.notebook.overview.insert('1.0', txt)
     
     def exit(self):
         self.quit()
-
 
 _description = "En este demo utilizo el widget Notebook el cual se encuentra en la librería tkinter.ttk "\
     "construido con tres pestañas que contienen un frame cada una el cual puede llevar un titulo.\n"\
@@ -182,8 +179,6 @@ _description = "En este demo utilizo el widget Notebook el cual se encuentra en 
     "La idea básica para tkinter.ttk es separar, en la medida de lo posible, "\
     "el código que implementa el comportamiento de un widget del código que implementa su apariencia.\n\n "\
 
-
-
 def lounchApp():
     app = Tk()
     app.title('TKINTER & TTK DEMO')
@@ -193,7 +188,6 @@ def lounchApp():
     demo = DEMO(app)
     demo.text_loader(_description)
     app.mainloop()
-
 
 if __name__ == '__main__':
     lounchApp()
